@@ -188,6 +188,7 @@ function ImportModule.Import(ImportCode, DelayPerPart)
                 BtoolsFunctions.SetMesh(TargetPart, Effect[5], Effect[6], Utils.ToVector3(unpack(Utils.Slice(Effect, 10, 12))))
             elseif Effect[1] == Types.Decal or Effect[1] == Types.Texture then
                 BtoolsFunctions.CreateTexture(TargetPart, Effect[1] == Types.Texture and "Texture" or "Decal", Effect[6])
+                task.wait(0.04)
                 BtoolsFunctions.SetTexture(TargetPart, Utils.GetNumberFromString(Effect[4]), Effect[1] == Types.Texture and "Texture" or "Decal", Effect[6])
 
                 if Effect[1] == Types.Texture then
