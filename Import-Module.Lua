@@ -283,7 +283,7 @@ function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 			end
 		else
 			if DebugModeEnabled then
-				warn("Could not find target part for effect at index:", Effect.Index, "effect data:", Effect.Data)
+				warn("Could not find target part for effect at index:", Effect.Index, "effect data:", HttpService:JSONEncode(Effect.Data))
 
 			end
 		end
