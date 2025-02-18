@@ -2,6 +2,7 @@ local PlayersService = game:GetService("Players")
 local LocalPlayer = PlayersService.LocalPlayer
 local Module = {}
 
+print("a")
 local function GetServerEndpoint()
 	local BToolsKeywords = { "F3X", "BTools", "Building", "Building Tools" }
 	local EndpointKeywords = { "serverend", "endpoint", "ServerEndPoint\226\128\140","\226\128\140" }
