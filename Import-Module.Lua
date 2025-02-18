@@ -66,7 +66,9 @@ local Types = {
 	SurfaceLight = 11,
 	Smoke = 12,
 	Fire = 13,
-	Sparkles = 14
+	Sparkles = 14,
+	Model = 15,
+	Folder = 18
 }
 
 local PartTypeMap = {
@@ -186,7 +188,7 @@ function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 				CreatePartWithProperties(Datum, Index)
 			end)()
 			task.wait(DelayPerPart)
-		elseif Datum[1] >= Types.SpecialMesh then
+		elseif Datum[1] >= Types.SpecialMesh and Datum[1] >= Types.Sparkles then
 			table.insert(Effects, {Index = Index, Data = Datum})
 		end
 	end
