@@ -80,12 +80,16 @@ local function ExecuteArgs(Args)
 	end
 
 	if ServerEndpoint then
+		local result = nil
 		local success, errorMessage = pcall(function()
-			ServerEndpoint:InvokeServer(unpack(Args))
+			result = ServerEndpoint:InvokeServer(unpack(Args))
 		end)
 
 		if not success then
 			warn("Failed to invoke server: " .. errorMessage)
+		end
+		if result then
+			print("Result : " .. result)
 		end
 	end
 end
