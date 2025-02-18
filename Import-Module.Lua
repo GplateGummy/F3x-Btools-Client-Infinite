@@ -51,6 +51,27 @@ function Utils.ToColor3(R, G, B)
 	return Color3.new(R or 1, G or 1, B or 1)
 end
 
+function Utils.FindLPIConveyor(PowerValue)
+	local SpBricks = game:GetService("Workspace"):FindFirstChild("Sp bricks")
+	if SpBricks then
+		local SpBricks2 = SpBricks:FindFirstChild("Sp bricks")
+		if SpBricks2 then
+			for _, Part in ipairs(SpBricks2:GetChildren()) do
+				if Part.Name ~= "River" then
+					continue
+				end
+				if not Part:FindFirstChild("Power") then
+					continue
+				end
+				if Part:FindFirstChild("Value") ~= PowerValue then
+					continue
+				end
+				return Part
+			end
+		end
+	end
+end
+
 local Types = {
 	Part = 0,
 	WedgePart = 1,
@@ -150,7 +171,16 @@ function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 		end
 
 		local Cframe = Utils.ToCFrame(Utils.Slice(Datum, 7, 18))
-		local Item = BtoolsFunctions.CreatePart(Cframe, game:GetService("Workspace"), PartType)
+		local Item = nil
+
+		if game.PlaceId == 391104146 and Datum[29] == 5 and Datum[28] == 1 and Datum[31] == 4 then -- FrontSurface = Universal, BottomSurface = Glue, LeftSurface = Inlet
+			local Conveyor = Utils.FindLPIConveyor(50)
+			if Conveyor then
+				Item = BtoolsFunctions.Clone(Conveyor, game:GetService("Workspace"))
+			end
+		else
+			Item = BtoolsFunctions.CreatePart(Cframe, game:GetService("Workspace"), PartType)
+		end
 
 		if Item then
 			local Size = Utils.ToVector3(unpack(Utils.Slice(Datum, 4, 6)))
