@@ -89,7 +89,7 @@ local function ExecuteArgs(Args)
 			warn("Failed to invoke server: " .. errorMessage)
 		end
 		if result then
-			print("Result : " .. result)
+			print("Result : " .. tostring(result))
 		end
 	end
 end
