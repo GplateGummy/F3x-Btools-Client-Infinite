@@ -653,7 +653,7 @@ function Module.CreateEffect(Part, EffectType)
 end
 
 function Module.ChangeEffect(Part, EffectType, Properties)
-	assert(Effect ~= nil and Properties ~= nil, "Argument cannot be nil")
+	assert(Part ~= nil and EffectType ~= nil and Properties ~= nil, "Argument cannot be nil")
 
 	local VaildEffects = {"Smoke", "Fire", "Sparkles", "PointLight", "SurfaceLight", "SpotLight"}
 	local LightEffects = {"PointLight", "SurfaceLight", "SpotLight"}
