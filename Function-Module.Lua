@@ -1,6 +1,6 @@
 local PlayersService = game:GetService("Players")
 local LocalPlayer = PlayersService.LocalPlayer
-local Change = {}
+local Module = {}
 
 local function GetServerEndpoint()
 	local BToolsKeywords = { "F3X", "BTools", "Building", "Building Tools" }
@@ -90,7 +90,7 @@ local function ExecuteArgs(Args)
 	end
 end
 
-function Change.SetCollision(Part, CanCollide)
+function Module.SetCollision(Part, CanCollide)
 	assert(Part ~= nil and CanCollide ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -106,7 +106,7 @@ function Change.SetCollision(Part, CanCollide)
 	ExecuteArgs(Args)
 end
 
-function Change.SetAnchor(Part, Anchored)
+function Module.SetAnchor(Part, Anchored)
 	assert(Anchored ~= nil and Part ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -122,7 +122,7 @@ function Change.SetAnchor(Part, Anchored)
 	ExecuteArgs(Args)
 end
 
-function Change.CreatePart(PartCFrame, PartParent, PartType)
+function Module.CreatePart(PartCFrame, PartParent, PartType)
     assert(PartCFrame ~= nil and PartParent ~= nil, "Arguments cannot be nil")
 
     local ValidPartTypes = {
@@ -170,7 +170,7 @@ function Change.CreatePart(PartCFrame, PartParent, PartType)
     return CreatedPart
 end
 
-function Change.Parent(Part, Parent)
+function Module.Parent(Part, Parent)
 	assert(Part ~= nil and Parent ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -184,7 +184,7 @@ function Change.Parent(Part, Parent)
 	ExecuteArgs(Args)
 end
 
-function Change.Clone(Part, Parent)
+function Module.Clone(Part, Parent)
 	assert(Part ~= nil and Parent ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -196,9 +196,28 @@ function Change.Clone(Part, Parent)
 	}
 
 	ExecuteArgs(Args)
+
+	local StartTime = os.clock()
+    local CreatedPart = nil
+
+    repeat
+        for _, Child in ipairs(Parent:GetChildren()) do
+            if Child:IsA("BasePart") 
+                and (Child.Position - Part.CFrame.Position).Magnitude < 0.01 then
+                CreatedPart = Child
+                break
+            end
+        end
+        if CreatedPart then
+            break
+        end
+        task.wait(0.01)
+    until os.clock() - StartTime >= 0.2
+
+    return CreatedPart
 end
 
-function Change.Destroy(Part)
+function Module.Destroy(Part)
 	assert(Part ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -211,7 +230,7 @@ function Change.Destroy(Part)
 	ExecuteArgs(Args)
 end
 
-function Change.MovePart(Part, Cframe)
+function Module.MovePart(Part, Cframe)
 	assert(Part ~= nil and Cframe ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -227,7 +246,7 @@ function Change.MovePart(Part, Cframe)
 	ExecuteArgs(Args)
 end
 
-function Change.Resize(Part, Size, Cframe)
+function Module.Resize(Part, Size, Cframe)
 	assert(Part ~= nil and Size ~= nil and Cframe ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -244,7 +263,7 @@ function Change.Resize(Part, Size, Cframe)
 	ExecuteArgs(Args)
 end
 
-function Change.Rotate(Part, Cframe_Angles)
+function Module.Rotate(Part, Cframe_Angles)
 	assert(Part ~= nil and Cframe_Angles ~= nil, "Argument cannot be nil")
 
 	local Cframe = Part.CFrame * Cframe_Angles
@@ -262,7 +281,7 @@ function Change.Rotate(Part, Cframe_Angles)
 	ExecuteArgs(Args)
 end
 
-function Change.Color(Part, Color)
+function Module.Color(Part, Color)
 	assert(Part ~= nil and Color ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -292,7 +311,7 @@ Surface should look like this :
 					}
 --]]
 
-function Change.Surface(Part, Surface)
+function Module.Surface(Part, Surface)
 	assert(Part ~= nil and Surface ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -322,7 +341,7 @@ function Change.Surface(Part, Surface)
 	end
 end
 
-function Change.AddMesh(Part)
+function Module.AddMesh(Part)
 	assert(Part ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -337,7 +356,7 @@ function Change.AddMesh(Part)
 	ExecuteArgs(Args)
 end
 
-function Change.SetMesh(Part, MeshId, TextureId, Scale) --These are Optional
+function Module.SetMesh(Part, MeshId, TextureId, Scale) --These are Optional
 	assert(Part ~= nil, "Argument cannot be nil")
 
 	local Properties = {}
@@ -370,7 +389,7 @@ function Change.SetMesh(Part, MeshId, TextureId, Scale) --These are Optional
 	ExecuteArgs(Args)
 end
 
-function Change.CreateTexture(Part, TextureType, Face)
+function Module.CreateTexture(Part, TextureType, Face)
 	assert(Part ~= nil and TextureType ~= nil and Face ~= nil, "Argument cannot be nil")
 
 	local ValidTextureTypes = {"Decal", "Texture"}
@@ -400,7 +419,7 @@ function Change.CreateTexture(Part, TextureType, Face)
 	ExecuteArgs(Args)
 end
 
-function Change.SetTexture(Part, TextureId, TextureType, Face)
+function Module.SetTexture(Part, TextureId, TextureType, Face)
 	assert(Part ~= nil and TextureId ~= nil and TextureType ~= nil and Face ~= nil, "Argument cannot be nil")
 
 	local ValidTextureTypes = {"Decal", "Texture"}
@@ -431,7 +450,7 @@ function Change.SetTexture(Part, TextureId, TextureType, Face)
 	ExecuteArgs(Args)
 end
 
-function Change.SetName(Part, Name)
+function Module.SetName(Part, Name)
 	assert(Part ~= nil and Name ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -445,7 +464,7 @@ function Change.SetName(Part, Name)
 	ExecuteArgs(Args)
 end
 
-function Change.Weld(Part1, Part2)
+function Module.Weld(Part1, Part2)
 	assert(Part1 ~= nil and Part2 ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -459,7 +478,7 @@ function Change.Weld(Part1, Part2)
 	ExecuteArgs(Args)
 end
 
-function Change.RemoveWelds(Welds)
+function Module.RemoveWelds(Welds)
 	assert(Welds ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -470,7 +489,7 @@ function Change.RemoveWelds(Welds)
 	ExecuteArgs(Args)
 end
 
-function Change.SetLocked(Part, Locked)
+function Module.SetLocked(Part, Locked)
 	assert(Part ~= nil and Locked ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -484,7 +503,7 @@ function Change.SetLocked(Part, Locked)
 	ExecuteArgs(Args)
 end
 
-function Change.SetMaterial(Part, Material)
+function Module.SetMaterial(Part, Material)
 	assert(Part ~= nil and Material ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -512,7 +531,7 @@ function Change.SetMaterial(Part, Material)
 	ExecuteArgs(Args2)
 end
 
-function Change.SetTransparency(Part, Transparency)
+function Module.SetTransparency(Part, Transparency)
 	assert(Part ~= nil and Transparency ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -540,7 +559,7 @@ function Change.SetTransparency(Part, Transparency)
 	ExecuteArgs(Args2)
 end
 
-function Change.SetReflectance(Part, Reflectance)
+function Module.SetReflectance(Part, Reflectance)
 	assert(Part ~= nil and Reflectance ~= nil, "Argument cannot be nil")
 
 	local Args = {
@@ -568,7 +587,7 @@ function Change.SetReflectance(Part, Reflectance)
 	ExecuteArgs(Args2)
 end
 
-function Change.CreateEffect(Part, EffectType)
+function Module.CreateEffect(Part, EffectType)
 	assert(Part ~= nil and EffectType ~= nil, "Argument cannot be nil")
 
 	local VaildEffects = {"Smoke","Fire","Sparkles","PointLight","SurfaceLight","SpotLight"}
@@ -621,7 +640,7 @@ function Change.CreateEffect(Part, EffectType)
 	ExecuteArgs(Args)
 end
 
-function Change.ChangeEffect(Effect, Properties)
+function Module.ChangeEffect(Effect, Properties)
 	assert(Effect ~= nil and Properties ~= nil, "Argument cannot be nil")
 
 	local VaildEffects = {"Smoke", "Fire", "Sparkles", "PointLight", "SurfaceLight", "SpotLight"}
@@ -674,7 +693,7 @@ function Change.ChangeEffect(Effect, Properties)
 	ExecuteArgs(Args)
 end
 
-function Change.Group(Type, Parent, Parts)
+function Module.Group(Type, Parent, Parts)
 	assert(Type ~= nil and Parent ~= nil and Parts ~= nil, "Argument cannot be nil")
 
 	local ValidGroupTypes = {
@@ -696,7 +715,7 @@ function Change.Group(Type, Parent, Parts)
 	ExecuteArgs(Args)
 end
 
-function Change.UnGroup(Groups)
+function Module.UnGroup(Groups)
 	assert(Groups ~= nil, "Argument cannot be nil")
 
 	if typeof(Groups) ~= "table" then
@@ -711,7 +730,7 @@ function Change.UnGroup(Groups)
 	ExecuteArgs(Args)
 end
 
-function Change.SetTextureStudsPerTile(Part, Face, StudsPerTileType, StudsPerTileNumber)
+function Module.SetTextureStudsPerTile(Part, Face, StudsPerTileType, StudsPerTileNumber)
 	assert(Part ~= nil and StudsPerTileType ~= nil and Face ~= nil, "Argument cannot be nil")
 
 	local ValidStudsPerTileTypes = {"StudsPerTileU", "StudsPerTileV"}
@@ -742,4 +761,4 @@ function Change.SetTextureStudsPerTile(Part, Face, StudsPerTileType, StudsPerTil
 	ExecuteArgs(Args)
 end
 
-return Change
+return Module
