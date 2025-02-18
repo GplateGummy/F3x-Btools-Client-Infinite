@@ -90,10 +90,8 @@ local function ExecuteArgs(Args)
 		end
 		if result then
 			if typeof(result) == "Instance" then
-			print("Result : " .. tostring(result.Name))
-else
-			print("Result : " .. tostring(result))
-end
+				return result
+			end
 		end
 	end
 end
@@ -131,51 +129,54 @@ function Module.SetAnchor(Part, Anchored)
 end
 
 function Module.CreatePart(PartCFrame, PartParent, PartType)
-    assert(PartCFrame ~= nil and PartParent ~= nil, "Arguments cannot be nil")
+	assert(PartCFrame ~= nil and PartParent ~= nil, "Arguments cannot be nil")
 
-    local ValidPartTypes = {
-        "Normal",
-        "Truss",
-        "Corner",
-        "Wedge",
-        "Cylinder",
-        "Ball",
-        "Seat",
-        "Vehicle Seat",
-        "Spawn"
-    }
+	local ValidPartTypes = {
+		"Normal",
+		"Truss",
+		"Corner",
+		"Wedge",
+		"Cylinder",
+		"Ball",
+		"Seat",
+		"Vehicle Seat",
+		"Spawn"
+	}
 
-    if not PartType or not table.find(ValidPartTypes, PartType) then
-        PartType = "Normal"
-    end
+	if not PartType or not table.find(ValidPartTypes, PartType) then
+		PartType = "Normal"
+	end
 
-    local CreationArguments = {
-        [1] = "CreatePart",
-        [2] = PartType,
-        [3] = PartCFrame,
-        [4] = PartParent
-    }
+	local CreationArguments = {
+		[1] = "CreatePart",
+		[2] = PartType,
+		[3] = PartCFrame,
+		[4] = PartParent
+	}
 
-    ExecuteArgs(CreationArguments)
+	local CreatedPart = ExecuteArgs(CreationArguments)
 
-    local StartTime = os.clock()
-    local CreatedPart = nil
+	if CreatedPart then
+		return CreatedPart
+	end
 
-    repeat
-        for _, Child in ipairs(PartParent:GetChildren()) do
-            if Child:IsA("BasePart") 
-                and (Child.Position - PartCFrame.Position).Magnitude < 0.01 then
-                CreatedPart = Child
-                break
-            end
-        end
-        if CreatedPart then
-            break
-        end
-        task.wait(0.01)
-    until os.clock() - StartTime >= 0.2
+	local StartTime = os.clock()
 
-    return CreatedPart
+	repeat
+		for _, Child in ipairs(PartParent:GetChildren()) do
+			if Child:IsA("BasePart") 
+				and (Child.Position - PartCFrame.Position).Magnitude < 0.01 then
+				CreatedPart = Child
+				break
+			end
+		end
+		if CreatedPart then
+			break
+		end
+		task.wait(0.01)
+	until os.clock() - StartTime >= 0.2
+
+	return CreatedPart
 end
 
 function Module.Parent(Part, Parent)
@@ -203,26 +204,29 @@ function Module.Clone(Part, Parent)
 		[3] = Parent
 	}
 
-	ExecuteArgs(Args)
+	local CreatedPart = ExecuteArgs(Args)
+
+	if CreatedPart then
+		return CreatedPart
+	end
 
 	local StartTime = os.clock()
-    local CreatedPart = nil
 
-    repeat
-        for _, Child in ipairs(Parent:GetChildren()) do
-            if Child:IsA("BasePart") 
-                and (Child.Position - Part.CFrame.Position).Magnitude < 0.01 then
-                CreatedPart = Child
-                break
-            end
-        end
-        if CreatedPart then
-            break
-        end
-        task.wait(0.01)
-    until os.clock() - StartTime >= 0.2
+	repeat
+		for _, Child in ipairs(Parent:GetChildren()) do
+			if Child:IsA("BasePart") 
+				and (Child.Position - Part.CFrame.Position).Magnitude < 0.01 then
+				CreatedPart = Child
+				break
+			end
+		end
+		if CreatedPart then
+			break
+		end
+		task.wait(0.01)
+	until os.clock() - StartTime >= 0.2
 
-    return CreatedPart
+	return CreatedPart
 end
 
 function Module.Destroy(Part)
