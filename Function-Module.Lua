@@ -89,7 +89,11 @@ local function ExecuteArgs(Args)
 			warn("Failed to invoke server: " .. errorMessage)
 		end
 		if result then
+			if typeof(result) == "Instance" then
+			print("Result : " .. tostring(result.Name))
+else
 			print("Result : " .. tostring(result))
+end
 		end
 	end
 end
