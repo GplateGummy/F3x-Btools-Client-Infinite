@@ -652,12 +652,11 @@ function Module.CreateEffect(Part, EffectType)
 	ExecuteArgs(Args)
 end
 
-function Module.ChangeEffect(Effect, Properties)
+function Module.ChangeEffect(Part, EffectType, Properties)
 	assert(Effect ~= nil and Properties ~= nil, "Argument cannot be nil")
 
 	local VaildEffects = {"Smoke", "Fire", "Sparkles", "PointLight", "SurfaceLight", "SpotLight"}
 	local LightEffects = {"PointLight", "SurfaceLight", "SpotLight"}
-	local EffectType = Effect.ClassName
 	local IsVaildEffect = false
 	local IsLightEffect = false
 
@@ -681,7 +680,7 @@ function Module.ChangeEffect(Effect, Properties)
 			[1] = "SyncLighting",
 			[2] = {
 				[1] = {
-					["Part"] = Effect.Parent,
+					["Part"] = Part,
 					["LightType"] = EffectType,
 				}
 			}
@@ -691,7 +690,7 @@ function Module.ChangeEffect(Effect, Properties)
 			[1] = "SyncDecorate",
 			[2] = {
 				[1] = {
-					["Part"] = Effect.Parent,
+					["Part"] = Part,
 					["DecorationType"] = EffectType,
 				}
 			}
