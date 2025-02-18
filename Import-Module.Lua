@@ -1,4 +1,3 @@
-
 local ImportModule = {}
 local BtoolsFunctions = loadstring(game:HttpGet("https://raw.githubusercontent.com/GplateGummy/F3x-Btools-Client-Infinite/refs/heads/main/Function-Module.Lua"))()
 local Utils = {}
@@ -97,7 +96,8 @@ local DefaultNames = {
 	Smoke = "Smoke",
 	Fire = "Fire",
 	Sparkles = "Sparkles",
-	Model = "Model"
+	Model = "Model",
+	Folder = "Folder"
 }
 
 local HttpService = game:GetService("HttpService")
@@ -189,7 +189,7 @@ function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 				CreatePartWithProperties(Datum, Index)
 			end)()
 			task.wait(DelayPerPart)
-		elseif Datum[1] >= Types.SpecialMesh and Datum[1] >= Types.Sparkles then
+		elseif Datum[1] >= Types.SpecialMesh and Datum[1] <= Types.Sparkles then
 			table.insert(Effects, {Index = Index, Data = Datum})
 		end
 	end
@@ -197,6 +197,9 @@ function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 	task.wait(1.5 + DelayPerPart)
 
 	for _, Effect in ipairs(Effects) do
+		if Effect.Data[1] == Types.Model then continue end
+		if Effect.Data[1] == Types.Folder then continue end
+
 		local TargetPart = Instances[Effect.Data[2]]
 		if TargetPart then
 			if Effect.Data[1] == Types.SpecialMesh then
