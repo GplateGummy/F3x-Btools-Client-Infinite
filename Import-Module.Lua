@@ -115,7 +115,7 @@ local function ImportCreationData(CreationId)
 	end
 end
 
-function ImportModule.Import(ImportCode, DelayPerPart)
+function ImportModule.Import(ImportCode, DelayPerPart, DebugModeEnabled)
 	ImportCode = ImportCode or "----"
 	DelayPerPart = DelayPerPart or 0.03
 	DelayPerPart = math.max(DelayPerPart, 0.01)
@@ -282,7 +282,10 @@ function ImportModule.Import(ImportCode, DelayPerPart)
 				})
 			end
 		else
-			warn("Could not find target part for effect at index:", Effect.Index)
+			if DebugModeEnabled then
+				warn("Could not find target part for effect at index:", Effect.Index, "effect data:", Effect.Data)
+
+			end
 		end
 	end
 end
