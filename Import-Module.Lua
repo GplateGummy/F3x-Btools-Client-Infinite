@@ -63,7 +63,7 @@ function Utils.FindLPIConveyor(PowerValue)
 				if not Part:FindFirstChild("Power") then
 					continue
 				end
-				if Part:FindFirstChild("Value") ~= PowerValue then
+				if Part:FindFirstChild("Power").Value ~= PowerValue then
 					continue
 				end
 				return Part
