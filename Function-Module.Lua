@@ -78,7 +78,7 @@ local function ExecuteArgs(Args)
 	if game.PlaceId == 17352689487 then
 		local NewArgs = {}
 
-		for ArgIndex, ArgValue in pairs(Args) do
+		for ArgIndex, ArgValue in ipairs(Args) do
 			if ArgIndex ~= 1 then
 				NewArgs[ArgIndex] = ArgValue
 			else
