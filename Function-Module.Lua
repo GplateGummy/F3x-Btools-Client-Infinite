@@ -75,6 +75,20 @@ local ServerEndpoint = GetServerEndpoint()
 local function ExecuteArgs(Args)
 	assert(Args ~= nil, "Error : ExecuteArgs Args cannot be nil")
 
+	if game.PlaceId == 17352689487 then
+		local NewArgs = {}
+
+		for ArgIndex, ArgValue in pairs(OldArgs) do
+			if ArgIndex ~= 1 then
+				NewArgs[ArgIndex] = ArgValue
+			else
+				NewArgs[ArgIndex] = ArgValue .. "1"
+			end
+		end
+
+		Args = NewArgs
+	end
+
 	if not ServerEndpoint then
 		ServerEndpoint = GetServerEndpoint()
 	end
@@ -148,7 +162,7 @@ function Module.CreatePart(PartCFrame, PartParent, PartType)
 	end
 
 	local CreationArguments = {
-		[1] = game.PlaceId == 17352689487 and "CreatePart1" or "CreatePart",
+		[1] = "CreatePart",
 		[2] = PartType,
 		[3] = PartCFrame,
 		[4] = PartParent
