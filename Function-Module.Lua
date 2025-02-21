@@ -148,7 +148,7 @@ function Module.CreatePart(PartCFrame, PartParent, PartType)
 	end
 
 	local CreationArguments = {
-		[1] = "CreatePart",
+		[1] = game.PlaceId == 17352689487 and "CreatePart1" or "CreatePart",
 		[2] = PartType,
 		[3] = PartCFrame,
 		[4] = PartParent
