@@ -67,7 +67,7 @@ end
 
 local ServerEndpoint = GetServerEndpoint()
 
-local function VaildItems(Parts)
+local function VaildParts(Parts)
 	if not Parts then
 		return false
 	end
@@ -83,17 +83,55 @@ local function VaildItems(Parts)
 	return true
 end
 
-local function OriginzeItems(Parts)
+local function OriginzeParts(Parts)
 	local NewPartsTable = {}
 
 	if typeof(Parts) == "table" then
 		for _, Part in pairs(Parts) do
+			if typeof(Part) ~= "Instance" then continue end
+			if not Part:IsA("BasePart") then continue end
+			if not Part:IsDescendantOf(game.Workspace) then continue end
 			table.insert(NewPartsTable, Part)
 		end
 	end
 
 	if typeof(Parts) == "Instance" then
 		NewPartsTable = {Parts}
+	end
+
+	return NewPartsTable
+end
+
+local function VaildGroups(Groups)
+	if not Groups then
+		return false
+	end
+
+	if typeof(Groups) ~= "table" and typeof(Groups) ~= "Instance" then
+		return false
+	end
+
+	if typeof(Groups) == "table" and #Groups <= 0 then
+		return false
+	end
+
+	return true
+end
+
+local function OriginzeGroups(Groups)
+	local NewPartsTable = {}
+
+	if typeof(Groups) == "table" then
+		for _, Part in pairs(Groups) do
+			if typeof(Part) ~= "Instance" then continue end
+			if not Part:IsA("Model") and not Part:IsA("Folder") then continue end
+			if not Part:IsDescendantOf(game.Workspace) then continue end
+			table.insert(NewPartsTable, Part)
+		end
+	end
+
+	if typeof(Groups) == "Instance" then
+		NewPartsTable = {Groups}
 	end
 
 	return NewPartsTable
@@ -143,8 +181,8 @@ BtoolsFunctionsModule = {
 	end,
 	["Construct"] = {
 		["Clone"] = function(Parts, CustomParent)
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local CloneParent = Parts[1].Parent
 
@@ -216,8 +254,8 @@ BtoolsFunctionsModule = {
 			if not ConstraintsPart then return end
 			if typeof(ConstraintsPart) ~= "Instance" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local WeldCreationArgs = {
 				[1] = "CreateWelds",
@@ -234,8 +272,8 @@ BtoolsFunctionsModule = {
 			if typeof(GroupType) ~= "string" then return end
 			if not table.find({"Model", "Folder"}, GroupType) then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local GroupParent = Parts[1].Parent
 
@@ -253,8 +291,8 @@ BtoolsFunctionsModule = {
 			BtoolsFunctionsModule["ExecuteArgs"](GroupCreationArgs)
 		end,
 		["Ungroup"] = function(Groups)
-			if not VaildItems(Groups) then return end
-			Groups = OriginzeItems(Groups)
+			if not VaildGroups(Groups) then return end
+			Groups = OriginzeGroups(Groups)
 
 			local UngroupArgs = {
 				[1] = "Ungroup",
@@ -264,8 +302,8 @@ BtoolsFunctionsModule = {
 			BtoolsFunctionsModule["ExecuteArgs"](UngroupArgs)
 		end,
 		["SetParent"] = function(Parts, NewParent)
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			if not NewParent then return end
 			if typeof(NewParent) ~= "Instance" then return end
@@ -279,8 +317,8 @@ BtoolsFunctionsModule = {
 			BtoolsFunctionsModule["ExecuteArgs"](SetParentArgs)
 		end,
 		["SetName"] = function(Parts, NewName)
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			if not NewName then return end
 			if typeof(NewName) ~= "string" then return end
@@ -299,8 +337,8 @@ BtoolsFunctionsModule = {
 			if not PartCFrame then return end
 			if typeof(PartCFrame) ~= "CFrame" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -325,8 +363,8 @@ BtoolsFunctionsModule = {
 			if not PartSize then return end
 			if typeof(PartSize) ~= "Vector3" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -349,8 +387,8 @@ BtoolsFunctionsModule = {
 			if not PartCFrame then return end
 			if typeof(PartCFrame) ~= "CFrame" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -374,8 +412,8 @@ BtoolsFunctionsModule = {
 			if not Anchor then return end
 			if typeof(Anchor) ~= "boolean" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -397,8 +435,8 @@ BtoolsFunctionsModule = {
 			if not Collision then return end
 			if typeof(Collision) ~= "boolean" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -424,8 +462,8 @@ BtoolsFunctionsModule = {
 				if typeof(LightType) ~= "string" then return end
 				if not table.find({"SpotLight", "SurfaceLight", "PointLight"}, LightType) then return end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -448,8 +486,8 @@ BtoolsFunctionsModule = {
 				if typeof(DecorationType) ~= "string" then return end
 				if not table.find({"Sparkles", "Fire", "Smoke"}, DecorationType) then return end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -468,8 +506,8 @@ BtoolsFunctionsModule = {
 				BtoolsFunctionsModule["ExecuteArgs"](DecorateCreationArgs)
 			end,
 			["Mesh"] = function(Parts)
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -495,8 +533,8 @@ BtoolsFunctionsModule = {
 				if typeof(TextureFace) ~= "EnumItem" then return end
 				if not table.find(Enum.NormalId:GetEnumItems(), TextureFace) then return end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -530,8 +568,8 @@ BtoolsFunctionsModule = {
 					if not table.find({"Color", "Range", "Face", "Brightness", "Angle"}, Property) then return end
 				end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -569,8 +607,8 @@ BtoolsFunctionsModule = {
 					if not table.find({"Color", "Opacity", "RiseVelocity", "Size", "Heat", "SecondaryColor", "SparkleColor"}, Property) then return end
 				end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -604,8 +642,8 @@ BtoolsFunctionsModule = {
 					if not table.find({"VertexColor", "MeshType", "Scale", "Offset", "MeshId", "TextureId"}, Property) then return end
 				end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -646,8 +684,8 @@ BtoolsFunctionsModule = {
 					if not table.find({"StudsPerTileV", "StudsPerTileU", "Transparency", "Texture"}, Property) then return end
 				end
 
-				if not VaildItems(Parts) then return end
-				Parts = OriginzeItems(Parts)
+				if not VaildParts(Parts) then return end
+				Parts = OriginzeParts(Parts)
 
 				local Changes = {}
 
@@ -680,8 +718,8 @@ BtoolsFunctionsModule = {
 			if not Color then return end
 			if typeof(Color) ~= "Color3" then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -718,11 +756,11 @@ BtoolsFunctionsModule = {
 				if not table.find({"Top", "Bottom", "Front", "Back", "Left", "Right"}, SurfaceName) then return end 
 			end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
-			
+
 			for _, Part in ipairs(Parts) do
 				table.insert(Changes, {
 					Part = Part,
@@ -742,8 +780,8 @@ BtoolsFunctionsModule = {
 			if typeof(Material) ~= "EnumItem" then return end
 			if not table.find(Enum.Material:GetEnumItems(), Material) then return end
 
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Changes = {}
 
@@ -764,8 +802,8 @@ BtoolsFunctionsModule = {
 	},
 	["Destroy"] = {
 		["Remove"] = function(Parts)
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local RemovePartsArgs = {
 				[1] = "Remove",
@@ -775,8 +813,8 @@ BtoolsFunctionsModule = {
 			BtoolsFunctionsModule["ExecuteArgs"](RemovePartsArgs)
 		end,
 		["RemoveWelds"] = function(Parts)
-			if not VaildItems(Parts) then return end
-			Parts = OriginzeItems(Parts)
+			if not VaildParts(Parts) then return end
+			Parts = OriginzeParts(Parts)
 
 			local Welds = {}
 
