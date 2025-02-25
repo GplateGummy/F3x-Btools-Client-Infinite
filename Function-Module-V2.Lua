@@ -90,6 +90,7 @@ local function OriginzeParts(Parts)
 		for _, Part in pairs(Parts) do
 			if typeof(Part) ~= "Instance" then continue end
 			if not Part:IsA("BasePart") then continue end
+			if Part:IsA("Terrain") then continue end
 			if not Part:IsDescendantOf(game.Workspace) then continue end
 			table.insert(NewPartsTable, Part)
 		end
