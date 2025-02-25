@@ -1,72 +1,72 @@
 # F3x-Btools-Client-Infinite Function-Module-V2 Documentation
 
-• ExecuteArgs (Args)
+* ExecuteArgs (Args)
 
 
-• Construct
+* Construct
 
-	• Clone (Parts, CustomParent)
+	* Clone (Parts, CustomParent)
 
-	• CreatePart (PartType, CustomCFrame, CustomParent)
+	* CreatePart (PartType, CustomCFrame, CustomParent)
 
-	• CreateWelds (Parts, ConstraintsPart)
+	* CreateWelds (Parts, ConstraintsPart)
 
-• Hierarchy
+* Hierarchy
 
-	• CreateGroup (GroupType, Parts, CustomParent)
+	* CreateGroup (GroupType, Parts, CustomParent)
 
-	• Ungroup (Groups)
+	* Ungroup (Groups)
 
-	• SetParent (Parts, NewParent)
+	* SetParent (Parts, NewParent)
 
-	• SetName (Parts, NewName)
+	* SetName (Parts, NewName)
 
-• Transform
+* Transform
 
-	• Move (Parts, PartCFrame)
+	* Move (Parts, PartCFrame)
 
-	• Resize (Parts, PartSize, PartCFrame)
+	* Resize (Parts, PartSize, PartCFrame)
 
-	• Rotate (Parts, PartCFrame)
+	* Rotate (Parts, PartCFrame)
 
-• Behavior
+* Behavior
 
-	• SetAnchor (Parts, Anchor)
+	* SetAnchor (Parts, Anchor)
 
-	• SetCollision (Parts, Collision)
+	* SetCollision (Parts, Collision)
 
-• Effects
+* Effects
 
-	• Create
+	* Create
 
-		• Light (Parts, LightType)
+		* Light (Parts, LightType)
 
-		• Decorate (Parts, DecorationType)
+		* Decorate (Parts, DecorationType)
 
-		• Mesh (Parts)
+		* Mesh (Parts)
 
-		• Texture (Parts, TextureType, TextureFace)
+		* Texture (Parts, TextureType, TextureFace)
 
-	• Modify
+	* Modify
 
-		• Light (Parts, LightType, Properties)
+		* Light (Parts, LightType, Properties)
 
-		• Decorate (Parts, DecorationType, Properties)
+		* Decorate (Parts, DecorationType, Properties)
 
-		• Mesh (Parts, Properties)
+		* Mesh (Parts, Properties)
 
-		• Texture (Parts, TextureType, TextureFace, Properties)
+		* Texture (Parts, TextureType, TextureFace, Properties)
 
-• Visual
+* Visual
 
-	• SetColor (Parts, Color)
+	* SetColor (Parts, Color)
 
-	• SetSurface (Parts, Surfaces)
+	* SetSurface (Parts, Surfaces)
 
-	• SetMaterial (Parts, Material)
+	* SetMaterial (Parts, Material)
 
-• Destroy
+* Destroy
 
-	• Remove (Parts)
+	* Remove (Parts)
 
-	• RemoveWelds (Parts)
+	* RemoveWelds (Parts)
